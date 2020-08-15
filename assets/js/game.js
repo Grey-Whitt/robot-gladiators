@@ -95,7 +95,7 @@ var startGame = function() {
             // let user know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             // use debugger to pause script from running and check what's going on at that moment in the code
-            debugger;
+            //debugger;
 
             // pick new enemy to fight based on the index of the enemy.names array
             var pickedEnemyObj = enemyInfo[i];
@@ -148,22 +148,20 @@ var endGame = function() {
 var shop = function() {
     // ask the play what they would like to do
     var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE."
     );
+    shopOptionPrompt = parseInt(shopOptionPrompt);
 
     switch(shopOptionPrompt) {
-        case "refill":
-        case "REFILL":
+        case 1:
             playerInfo.refillHealth();
             break;
         
-        case "upgrade":
-        case "UPGRADE":
+        case 2:
             playerInfo.upgradeAttack();
             break;
             
-        case "leave":
-        case "LEAVE":
+        case 3:
             window.alert("Leaving the store");
 
             //do thing, so function will end
@@ -208,10 +206,10 @@ var playerInfo = {
     },
 
     refillHealth: function() {
-        if (this.money >= 7) {
+        if (this.Money >= 7) {
           window.alert("Refilling player's health by 20 for 7 dollars.");
-          this.health += 20;
-          this.money -= 7;
+          this.Health += 20;
+          this.Money -= 7;
         } 
         else {
           window.alert("You don't have enough money!");
@@ -219,10 +217,10 @@ var playerInfo = {
     },
 
     upgradeAttack: function() {
-        if (this.money >= 7) {
+        if (this.Money >= 7) {
           window.alert("Upgrading player's attack by 6 for 7 dollars.");
-          this.attack += 6;
-          this.money -= 7;
+          this.Attack += 6;
+          this.Money -= 7;
         } 
         else {
           window.alert("You don't have enough money!");
