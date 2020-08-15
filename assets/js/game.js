@@ -4,24 +4,41 @@
 //    * Defeat each enemy robot
 // "Lose" - Player robot's health is zero or less
 
+var fightOrSkip = function() {
+    //ask user if they want to fight or skip
+    var prompFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+    prompFight = prompFight.toLocaleLowerCase();
+//                                                                              //could also be done using falsy
+    if (prompFight === "" || prompFight === null) {                             // if (!promptFight) {
+        window.alert("You need to provide a valid answer! please try again.");  //   window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();                                                   //   return fightOrSkip();
+    }                                                                           //  }
+
+    //if user picks skip confirm and then stop the loop 
+    if (prompFight === "skip") {
+
+        //confirm the user would like to skip 
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        //if true then leave fight 
+        if (confirmSkip) {
+            window.alert(playerInfo.Name + " has decided to skip this fight. Goodbye!");
+            // subtract money from playerMoney for skipping, but don't let them go into the negative
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+      
+            // return true if user wants to leave
+            return true;
+        }
+    }
+    return false;
+}
+
 var fight = function (enemy) {
     while (playerInfo.Health > 0 && enemy.health > 0) {
-        // ask user if they'd liked to fight or run
-        var promptFight = window.prompt('Would you like FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
-
-        // if user picks "skip" confirm and then stop the loop
-        if (promptFight === "skip" || promptFight === "SKIP") {
-            // confirm user wants to skip
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-            // if yes (true), leave fight
-            if (confirmSkip) {
-                window.alert(playerInfo.Name + ' has decided to skip this fight. Goodbye!');
-                // subtract money from playerInfo.Money for skipping
-                playerInfo.Money = Math.max(0, playerInfo.Money - 10);
-                console.log("playerInfo.Money", playerInfo.Money)
-                break;
-            }
+        
+        if (fightOrSkip()) {
+            // if true, leave fight by breaking loop
+            break;
         }
 
         // generate random damage value based on player's attack power
@@ -78,7 +95,7 @@ var startGame = function() {
             // let user know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             // use debugger to pause script from running and check what's going on at that moment in the code
-            //debugger;
+            debugger;
 
             // pick new enemy to fight based on the index of the enemy.names array
             var pickedEnemyObj = enemyInfo[i];
@@ -92,7 +109,7 @@ var startGame = function() {
             //if we aren't at the last enemy in the array
             if (playerInfo.Health > 0 && i < enemyInfo.length - 1){
                 //ask user if they want to use the store before the next round
-                var storeConfirm = window.confirm("the fight is over, visit the store before the next round?");
+                var storeConfirm = window.confirm("Visit the store before the next round?");
 
                 // if yes  take them to the store() function 
                 if (storeConfirm) {
@@ -185,9 +202,9 @@ var playerInfo = {
     Money: 10,
 
     reset: function() {
-        this.health = 10;
-        this.money = 10;
-        this.attack = 10;
+        this.Health = 100;
+        this.Attack = 10;
+        this.Money = 10;
     },
 
     refillHealth: function() {
